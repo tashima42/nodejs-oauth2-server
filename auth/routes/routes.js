@@ -9,7 +9,8 @@ const filePath = path.join(__dirname, '../public/oauthAuthenticate.html')
 const {crypto} = require("../utilities/index")
 const {userRepository} = require("../repositories/index")
 
-router.get('/', (req, res) => {  // send back a simple form for the oauth
+// AUTH
+router.get('/login', (req, res) => {  // send back a simple form for the oauth
   res.sendFile(filePath)
 })
 
@@ -50,5 +51,31 @@ router.post('/token', (req, res, next) => {
   },
 }))  // Sends back token
 
+//  CLIENT
+router.post('/create', async (req, res) => {
+  const {clientId, redirectUris, grants} = req.body
+  const apiKey = crypto.generateRandomCode()
+  //const clientSecret = crypto.generateRandomCode()
+  const createdClient = await clientRepository.saveClient({
+    clientId,
+    //clientSecret,
+    redirectUris,
+    grants,
+    apiKey,
+  })
+  return res.json({createdClient})
+})
+
+// USER
+
+router.post('/create', async (req, res) => {
+  const {username, password, packages, country} = req.body
+  const hashedPassword = crypto.hashString(password)
+  const subscriber_id = crypto.generateRandomCode()
+  const createdUser = await userRepository.saveUser({username, password: hashedPassword, packages, country, subscriber_id})
+  delete createdUser.password
+  return res.json(createdUser)
+})
 
 module.exports = router
+

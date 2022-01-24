@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router() // Instantiate a new router
-const DebugControl = require('../utilities/debug.js')
+const {userRepository, tokenRepository} = require("../repositories/index")
 
-router.get('/', (req,res) => {  // Successfully reached if can hit this :)
-  DebugControl.log.variable({name: 'res.locals.oauth.token', value: res.locals.oauth.token})
+router.get('/', (req, res) => {  // Successfully reached if can hit this :)
   res.json({success: true})
 })
+
 
 module.exports = router

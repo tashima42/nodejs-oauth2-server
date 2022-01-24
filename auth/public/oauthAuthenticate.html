@@ -7,11 +7,14 @@
 </head>
 <body class='container'>
   <h1>Authentication On Our Server</h1>
-  <form action='/oauth/authorize' method="post">
-    <p>These inputs should be hidden in production</p>
+    <!--
     <div class='form-group'>
       <label>Client Id</label>
       <input class='form-control' name='client_id'/>
+    </div>
+    <div class='form-group'>
+      <label>Client Secret</label>
+      <input class='form-control' name='client_secret'/>
     </div>
     <div class='form-group'>
       <label>Redirect Uri</label>
@@ -34,29 +37,56 @@
       The defaults for this will successfully login. Anything else will fail.
       This behavior is <strong>NOT</strong> handled by OAuth, but must be included in your middleware.
     </p>
+    -->
     <div class="form-group">
       <label>Username</label>
-      <input class='form-control auth' type="text" name="username" value="username">
+      <input class='form-control auth' type="text" name="username" value="toolbox" id="username">
     </div>
     <div class="form-group">
       <label>Password</label>
-      <input class='form-control auth' type="text" name="password" value="password" />
+      <input class='form-control auth' type="text" name="password" value="password" id="password"/>
     </div>
-    <input type='submit' class='btn btn-success' />
-  </form>
+    <button class='btn btn-success' onclick='authorize()'>Submit</button>
   <script>
-  ;(function(){
-    const urlParams = new URLSearchParams(window.location.search)
-    ;['client_id','redirect_uri', 'response_type', 'grant_type', 'state'].forEach(type => {
-      const input = document.body.querySelector(`input[name=${type}]`)
-      const value = urlParams.get(type)
-      input.value = value
-    })
-    const error = urlParams.get('success') === 'false'
-    if(error) {
-      document.body.querySelectorAll('.auth').forEach(el => el.classList.add('is-invalid'))
+    function authorize() {
+      const params = getUrlParams()
+      const username = document.getElementById("username").value
+      const password = document.getElementById("password").value
+      const client_secret = "0838aae298346f53cec84827cb3e2da69f5fd40b"
+      const body = `client_id=${params.client_id}&redirect_uri=${params.redirect_uri}&response_type=${params.response_type}&grant_type=${params.grant_type}&state=${params.state}&username=${username}&password=${password}&country=${params.country}&client_secret=${client_secret}`  
+      fetch('/authorize', {
+        method: 'POST',
+        body,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      })
+      .then(res => { 
+            const url = res.url
+            const code = url.split("code=")[1].split('&')[0]
+            const state = url.split("state=")[1].split('&')[0]
+            window.location.replace(`${params.redirect_uri}?code=${code}&state=${state}`);
+      })
     }
-  }())
+
+    function getUrlParams(){
+      const params = {
+        client_id: null,
+        redirect_uri: null,
+        response_type: null,
+        grant_type: null,
+        state: null,
+        country: null
+      }
+      const urlParams = new URLSearchParams(window.location.search)
+      Object.keys(params).forEach(type => {
+        const value = urlParams.get(type)
+        params[type] = value
+      })
+      const error = urlParams.get('success') === 'false'
+      if(error) {
+        document.body.querySelectorAll('.auth').forEach(el => el.classList.add('is-invalid'))
+      }
+      return params
+    }
   </script>
 </body>
 </html>
