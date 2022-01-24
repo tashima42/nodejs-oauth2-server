@@ -53,7 +53,7 @@
       const username = document.getElementById("username").value
       const password = document.getElementById("password").value
       const client_secret = "0838aae298346f53cec84827cb3e2da69f5fd40b"
-      const body = `client_id=${params.client_id}&redirect_uri=${params.redirect_uri}&response_type=${params.response_type}&grant_type=${params.grant_type}&state=${params.state}&username=${username}&password=${password}&country=${params.country}&client_secret=${client_secret}`  
+      const body = `client_id=${params.client_id}&redirect_uri=${params.redirect_uri}&response_type=${params.response_type}&state=${params.state}&username=${username}&password=${password}&country=${params.country}&client_secret=${client_secret}`  
       fetch('/authorize', {
         method: 'POST',
         body,
@@ -72,7 +72,6 @@
         client_id: null,
         redirect_uri: null,
         response_type: null,
-        grant_type: null,
         state: null,
         country: null
       }
