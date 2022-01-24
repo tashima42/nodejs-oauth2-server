@@ -52,7 +52,7 @@ router.post('/token', (req, res, next) => {
 }))  // Sends back token
 
 //  CLIENT
-router.post('/create', async (req, res) => {
+router.post('/client/create', async (req, res) => {
   const {clientId, redirectUris, grants} = req.body
   const apiKey = crypto.generateRandomCode()
   //const clientSecret = crypto.generateRandomCode()
@@ -68,7 +68,7 @@ router.post('/create', async (req, res) => {
 
 // USER
 
-router.post('/create', async (req, res) => {
+router.post('/user/create', async (req, res) => {
   const {username, password, packages, country} = req.body
   const hashedPassword = crypto.hashString(password)
   const subscriber_id = crypto.generateRandomCode()
