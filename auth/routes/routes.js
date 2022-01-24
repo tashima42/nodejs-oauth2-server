@@ -7,7 +7,7 @@ const router = express.Router() // Instantiate a new router
 const filePath = path.join(__dirname, '../public/oauthAuthenticate.html')
 
 const {crypto} = require("../utilities/index")
-const {userRepository} = require("../repositories/index")
+const {userRepository, clientRepository} = require("../repositories/index")
 
 // AUTH
 router.get('/login', (req, res) => {  // send back a simple form for the oauth
