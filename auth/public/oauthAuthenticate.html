@@ -23,13 +23,14 @@
       const password = document.getElementById("password").value
       const client_secret = "0838aae298346f53cec84827cb3e2da69f5fd40b"
       const body = `client_id=${params.client_id}&redirect_uri=${params.redirect_uri}&response_type=${params.response_type}&state=${params.state}&username=${username}&password=${password}&country=${params.country}&client_secret=${client_secret}`  
-      fetch('/authorize', {
+      fetch(new Request('/authorize', {
         method: 'POST',
         body,
         headers: { 
               'Content-Type': 'application/x-www-form-urlencoded' 
         },
-      })
+        redirect: 'manual'
+      }))
       .then(res => { 
             console.log({res})
               const url = res.url
