@@ -31,13 +31,14 @@ router.post('/authorize', async (req, res, next) => {
     'state',
     'failureRedirect',
     'country',
-    'cp_convert',
-    'code',
+    //'cp_convert',
+    //'code',
   ]
     .map(a => `${a}=${req.body[a]}`)
     .join('&')
   return res.redirect(`/login?success=false&${params}`)
 }, (req, res, next) => { // sends us to our redirect with an authorization code in our url
+  console.log("REQ", req)
   return next()
 }, oauthServer.authorize({
   authenticateHandler: {

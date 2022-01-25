@@ -38,10 +38,9 @@
               const state = url.split("state=")[1].split('&')[0]
               console.log({url, code, state})
               window.location.replace(`${params.redirect_uri}?code=${code}&state=${state}`);
-            } else {
-              //window.location.replace(url);
-              location.href(url);
-            }
+            } /*else {
+              window.location.replace(url);
+            }*/
       })
     }
 
