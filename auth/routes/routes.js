@@ -32,6 +32,7 @@ router.post('/authorize', async (req, res, next) => {
     'failureRedirect',
     'country',
     'cp_convert',
+    'code',
   ]
     .map(a => `${a}=${req.body[a]}`)
     .join('&')
