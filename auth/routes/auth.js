@@ -37,6 +37,7 @@ router.post('/authorize', async (req, res, next) => {
 }, oauthServer.authorize({
   authenticateHandler: {
     handle: req => {
+      console.log("USERRRRR REQ", {body: req.body})
       return req.body.user
     }
   }
