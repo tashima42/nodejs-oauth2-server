@@ -26,19 +26,22 @@
       fetch('/authorize', {
         method: 'POST',
         body,
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        headers: { 
+              'Content-Type': 'application/x-www-form-urlencoded' 
+        },
       })
       .then(res => { 
             console.log({res})
-            const url = res.url
-            if(url.contains("code=")) {
+            //const url = res.url
               const code = url.split("code=")[1].split('&')[0]
               const state = url.split("state=")[1].split('&')[0]
               console.log({url, code, state})
               window.location.replace(`${params.redirect_uri}?code=${code}&state=${state}`);
+                  /*
             } else {
               window.location.replace(url);
             }
+   */
       })
     }
 
