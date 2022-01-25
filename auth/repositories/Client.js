@@ -19,6 +19,6 @@ module.exports = function ({Client}) {
     const params = typeof searchParams === "string" ? {clientId: searchParams} : searchParams
     const found = await Client.findOne(params).lean()
     console.log("GET CLIENT", {searchParams, found})
-    return found ? found : null
+    return found ? found : false
   }
 }
