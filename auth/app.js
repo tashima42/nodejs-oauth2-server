@@ -9,7 +9,9 @@ const oauthServer = require('./oauth/server.js')
 const {connectDb, tokenRepository} = require("./repositories/index")
 
 //Here we are configuring express to use body-parser as middle-ware.
-app.use(cors())
+app.use(cors({
+  origin: 'https://dummy-dev.tbxnet.com',
+}))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
