@@ -32,7 +32,7 @@
       })
       .then(res => { 
             console.log({res})
-            //const url = res.url
+            const url = res.url
               const code = url.split("code=")[1].split('&')[0]
               const state = url.split("state=")[1].split('&')[0]
               console.log({url, code, state})
