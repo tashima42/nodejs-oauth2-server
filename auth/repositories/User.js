@@ -10,8 +10,10 @@ module.exports = function ({User}) {
     return insertedUser
   }
   async function findUser(searchParams) {
+    if (!searchParams) return false
     const found = await User.findOne(searchParams).lean()
-    return found ? found : null
+    console.log("GET USER", {searchParams, found, a: found ? found : false})
+    return found ? found : false
   }
   async function findById(id) {
     const foundUser = await User.findOne({_id: id})
