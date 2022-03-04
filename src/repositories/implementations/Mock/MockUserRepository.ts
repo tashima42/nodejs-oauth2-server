@@ -8,7 +8,7 @@ export class MockUserRepository implements IUserRepository {
       username: "user1@example.com",
       password: "$2b$10$P9PjYWou7PU.pDA3sx3DwuW1ny902LV13LVZsZGHlahuOUbsOPuBO", // secret
       packages: ["urn:tve:tbx"],
-      country: "BR",
+      country: "AR",
       subscriberId: "subscriber1",
     }]
 

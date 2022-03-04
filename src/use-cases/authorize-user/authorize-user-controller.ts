@@ -5,7 +5,6 @@ export class AuthorizeUserController {
   constructor(private authorizeUserUseCase: AuthorizeUserUseCase) {}
 
   async handle(request: Request, response: Response): Promise<unknown> {
-    console.log(request.body)
     const {username, password, country, redirect_uri, state, client_id} = request.body
 
     try {

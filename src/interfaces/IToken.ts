@@ -5,7 +5,7 @@ export interface IToken {
   accessToken: string,
   accessTokenExpiresAt: Date,
   refreshToken: string,
-  refreshTokenExpiresAt: string,
+  refreshTokenExpiresAt: Date,
   client: IClient,
   user: IUser,
   _id?: string,
