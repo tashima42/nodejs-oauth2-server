@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "ts-node src/server.ts",
-    "dev": "nodemon --exec ts-node --transpile-only src/server.ts"
+    "dev": "nodemon --exec ts-node --transpile-only src/server.ts",
+    "build": "tsc --build"
   },
   "author": "Asher",
   "license": "ISC",
