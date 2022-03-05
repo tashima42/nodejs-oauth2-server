@@ -19,9 +19,8 @@
     <button class='btn btn-info btn-go-to-page' onclick='goToPage()' style="display:none;">Go back to page</button>
   <script>
     function goToPage() {
-      const params = getUrlParams();
-      const { redirect_uri } = params;
-      window.location.replace(redirect_uri)
+      const dummyPage = "https://dummy-dev.tbxnet.com/"
+      window.location.replace(dummyPage)
     }
     function authorize() {
       const params = getUrlParams()
@@ -39,8 +38,10 @@
       })
       const submitButton = document.querySelector('.btn-success')
       const goBackToPageButton = document.querySelector('.btn-go-to-page')
-      submitButton.style.display = 'none';
-      goBackToPageButton.style.display = 'block';
+      setTimeout(() => {
+        submitButton.style.display = 'none';
+        goBackToPageButton.style.display = 'block';
+      }, 800)
     }
 
     function getUrlParams(){
