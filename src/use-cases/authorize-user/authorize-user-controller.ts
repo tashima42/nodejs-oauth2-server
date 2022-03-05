@@ -16,7 +16,7 @@ export class AuthorizeUserController {
         state: String(state),
         client_id: String(client_id)
       })
-      return response.redirect(`${redirect_uri}?success=true&state=${state}&code=${authorizationCode}`)
+      return response.redirect(`${redirect_uri}?state=${state}&code=${authorizationCode}`)
     } catch (error: any) {
       if (error.code === "UC-AU-001")
         return response.status(404).json({success: false, message: error.message})
