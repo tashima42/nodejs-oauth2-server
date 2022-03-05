@@ -8,8 +8,16 @@ const loginFilePath = path.join(__dirname, '../public/oauthAuthenticate.html')
 
 const router = Router()
 
-router.get('/login', (_, res) => res.sendFile(loginFilePath))
-router.post('/authorize', (req, res) => authorizeUserController.handle(req, res))
-router.post('/token', (req, res) => createTokenController.handle(req, res))
+function log(req, res, next) {
+  console.log({
+    body: req.body,
+    url: req.url,
+  })
+  return next()
+}
+
+router.get('/login', log, (_, res) => res.sendFile(loginFilePath))
+router.post('/authorize', log,  (req, res) => authorizeUserController.handle(req, res))
+router.post('/token', log, (req, res) => createTokenController.handle(req, res))
 
 export {router}
