@@ -1,9 +1,9 @@
 import {Router} from "express";
 import path from "path"
 
-import {authorizeUserController} from "./use-cases/authorize-user";
-import {createTokenController} from "./use-cases/create-token";
-import {getUserInfoController} from "./use-cases/get-user-info";
+import {authorizeUserController} from "./use-cases/authorize-user/index";
+import {createTokenController} from "./use-cases/create-token/index";
+import {getUserInfoController} from "./use-cases/get-user-info/index";
 
 const loginFilePath = path.join(__dirname, '../public/oauthAuthenticate.html')
 
