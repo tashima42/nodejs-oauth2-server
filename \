@@ -16,13 +16,8 @@
       <input class='form-control auth' type="text" name="password" value="secret" id="password"/>
     </div>
     <button class='btn btn-success' onclick='authorize()'>Submit</button>
-    <button class='btn btn-info btn-go-to-page' onclick='goToPage()' style="display:none;">Go back to page</button>
+    <button class='btn btn-info btn-go-to-page' disabled onclick='goToPage()'>Go back to page</button>
   <script>
-    function goToPage() {
-      const params = getUrlParams();
-      const { redirect_uri } = params;
-      window.location.replace(redirect_uri)
-    }
     function authorize() {
       const params = getUrlParams()
       const username = document.getElementById("username").value
@@ -37,10 +32,6 @@
         mode: 'no-cors',
         redirect: 'follow',
       })
-      const submitButton = document.querySelector('.btn-success')
-      const goBackToPageButton = document.querySelector('.btn-go-to-page')
-      submitButton.style.display = 'none';
-      goBackToPageButton.style.display = 'block';
     }
 
     function getUrlParams(){
