@@ -7,5 +7,5 @@ export interface IAuthorizationCode {
   redirectUri: string,
   client: IClient,
   user: IUser,
-  _id?: string,
+  id?: string,
 }

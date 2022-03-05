@@ -4,5 +4,5 @@ export interface IClient {
   redirectUris?: Array<string>,
   grants?: Array<string>,
   apiKey?: string,
-  _id?: string,
+  id?: string,
 }

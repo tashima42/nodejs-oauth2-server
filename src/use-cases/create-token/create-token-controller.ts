@@ -5,7 +5,6 @@ export class CreateTokenController {
   constructor(private createTokenUseCase: CreateTokenUseCase) {}
 
   async handle(request: Request, response: Response): Promise<unknown> {
-    console.log(request.body)
     const {client_id, client_secret, code} = request.body
 
     try {
@@ -18,7 +17,7 @@ export class CreateTokenController {
     } catch (error: any) {
       if (error.code)
         return response.status(404).json({success: false, message: error.message})
-      return response.status(500).json({success: false, message: "Unexpected error, contact the developers"})
+      return response.status(500).json({success: false, message: "Unexpected error, contact the developers", stack: error.stack})
     }
   }
 }

@@ -10,4 +10,4 @@ app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 app.use(router)
 
-export {app}
+app.listen(3890, () => console.log("app listening on port 3890"))

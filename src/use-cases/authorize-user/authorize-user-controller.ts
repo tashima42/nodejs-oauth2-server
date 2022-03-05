@@ -18,12 +18,13 @@ export class AuthorizeUserController {
       })
       return response.redirect(`${redirect_uri}?state=${state}&code=${authorizationCode}`)
     } catch (error: any) {
+      console.error(error)
       if (error.code === "UC-AU-001")
         return response.status(404).json({success: false, message: error.message})
       if (error.code === "UC-AU-002")
         return response.status(401).json({success: false, message: error.message})
 
-      return response.status(500).json({success: false, message: "Unexpected error, contact the developers"})
+      return response.status(500).json({success: false, message: "Unexpected error, contact the developers", stack: error.stack})
     }
   }
 }

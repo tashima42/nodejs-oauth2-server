@@ -4,7 +4,7 @@ import {IClient} from "../../../interfaces/IClient";
 export class MockClientRepository implements IClientRepository {
   async getById(id: string): Promise<IClient> {
     const mockData = [{
-      _id: "28riosndjfh290qhqwhhnioasowe",
+      id: "28riosndjfh290qhqwhhnioasowe",
       clientId: "client1",
       clientSecret: "secret",
       redirectUris: [

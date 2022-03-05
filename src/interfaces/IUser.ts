@@ -4,5 +4,5 @@ export interface IUser {
   packages: Array<string>,
   country: string,
   subscriberId: string,
-  _id?: string,
+  id?: string,
 }

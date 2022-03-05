@@ -1,15 +1,17 @@
 import {AuthorizeUserUseCase} from "./authorize-user-use-case";
 import {AuthorizeUserController} from "./authorize-user-controller";
-import {MockUserRepository} from "../../repositories/implementations/Mock/MockUserRepository";
-import {MockAuthorizationCodeRepository} from "../../repositories/implementations/Mock/MockAuthorizationCodeRepository";
-import {MockClientRepository} from "../../repositories/implementations/Mock/MockClientRepository";
 import {CryptoHelper} from "../../helpers/implementations/CryptoHelper";
 import {DateHelper} from "../../helpers/implementations/DateHelper";
+import {SqliteAuthorizationCodeRepository} from "../../repositories/implementations/Sqlite/SqliteAuthorizationCodeRepository";
+import {SqliteUserRepository} from "../../repositories/implementations/Sqlite/SqliteUserRepository";
+import {SqliteDatabase} from "../../repositories/implementations/Sqlite/index";
+import {SqliteClientRepository} from "../../repositories/implementations/Sqlite/SqliteClientRepository";
 
+const sqliteDatabase = new SqliteDatabase()
+const authorizationCodeRepository = new SqliteAuthorizationCodeRepository(sqliteDatabase)
+const userRepository = new SqliteUserRepository(sqliteDatabase)
 const cryptoHelper = new CryptoHelper()
-const userRepository = new MockUserRepository()
-const clientRepository = new MockClientRepository()
-const authorizationCodeRepository = new MockAuthorizationCodeRepository(cryptoHelper)
+const clientRepository = new SqliteClientRepository(sqliteDatabase)
 const dateHelper = new DateHelper()
 
 const authorizeUserUseCase = new AuthorizeUserUseCase(

@@ -8,5 +8,5 @@ export interface IToken {
   refreshTokenExpiresAt: Date,
   client: IClient,
   user: IUser,
-  _id?: string,
+  id?: string,
 }

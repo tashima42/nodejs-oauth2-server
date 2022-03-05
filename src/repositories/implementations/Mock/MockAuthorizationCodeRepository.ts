@@ -8,13 +8,13 @@ export class MockAuthorizationCodeRepository implements IAuthorizationCodeReposi
   constructor(private cryptoHelper: ICryptoHelper) {}
 
   async create(authorizationCode: IAuthorizationCode): Promise<IAuthorizationCode> {
-    const _id = this.cryptoHelper.generateRandomHash()
-    authorizationCode._id = _id
+    const id = this.cryptoHelper.generateRandomHash()
+    authorizationCode.id = id
     return authorizationCode
   }
   async getByCode(code: string): Promise<IAuthorizationCode> {
     const mockClient: IClient = {
-      _id: "28riosndjfh290qhqwhhnioasowe",
+      id: "28riosndjfh290qhqwhhnioasowe",
       clientId: "client1",
       clientSecret: "secret",
       redirectUris: [
@@ -23,7 +23,7 @@ export class MockAuthorizationCodeRepository implements IAuthorizationCodeReposi
       ],
     }
     const mockUser: IUser = {
-      _id: "q289yruiasdf9ih23yui9fwequifqwe",
+      id: "q289yruiasdf9ih23yui9fwequifqwe",
       username: "user1@example.com",
       password: "$2b$10$P9PjYWou7PU.pDA3sx3DwuW1ny902LV13LVZsZGHlahuOUbsOPuBO", // secret
       packages: ["urn:tve:tbx"],

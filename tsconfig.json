@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
-    "target": "es5",
+    "target": "es2017",
     "outDir": "dist"
   },
   "include": [
