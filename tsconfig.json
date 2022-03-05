@@ -2,7 +2,8 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "target": "es2017",
-    "outDir": "dist"
+    "outDir": "dist",
+    "moduleResolution": "node"
   },
   "include": [
     "src"
