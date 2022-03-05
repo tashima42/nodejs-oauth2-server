@@ -4,7 +4,7 @@
   "description": "An example of how oauth works",
   "main": "src/index.js",
   "scripts": {
-    "start": "npm run build && node dist/index.ts",
+    "start": "npm run build && node dist/index.js",
     "dev": "nodemon --exec ts-node --transpile-only src/index.ts",
     "build": "tsc --build",
     "db:migrate": "ts-node --transpile-only scripts/database.ts --migrate",
