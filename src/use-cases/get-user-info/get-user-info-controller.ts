@@ -6,8 +6,10 @@ export class GetUserInfoController {
   constructor(private getUserInfoUseCase: GetUserInfoUseCase) {}
 
   async handle(request: Request, response: Response): Promise<unknown> {
+    // Extract authorization access token from headers
     const token = request.headers.authorization.replace('Bearer ', '')
     try {
+      // Get user information from the access token
       const userInfo: GetUserInfoResponseDTO = await this.getUserInfoUseCase.execute({token})
       return response.status(200).json(userInfo)
     } catch (error: any) {

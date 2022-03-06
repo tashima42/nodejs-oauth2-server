@@ -7,13 +7,16 @@ import {SqliteClientRepository} from "../../repositories/implementations/Sqlite/
 import {SqliteAuthorizationCodeRepository} from "../../repositories/implementations/Sqlite/SqliteAuthorizationCodeRepository";
 import {SqliteTokenRepository} from "../../repositories/implementations/Sqlite/SqliteTokenRepository";
 
-const sqliteDatabase = new SqliteDatabase()
+// Instantiate helpers
 const cryptoHelper = new CryptoHelper()
 const dateHelper = new DateHelper()
+// Instantiate repositories
+const sqliteDatabase = new SqliteDatabase()
 const tokenRepository = new SqliteTokenRepository(sqliteDatabase)
 const authorizeCodeRepository = new SqliteAuthorizationCodeRepository(sqliteDatabase)
 const clientRepository = new SqliteClientRepository(sqliteDatabase)
 
+// Instantiate Use Case
 const createTokenUseCase = new CreateTokenUseCase(
   tokenRepository,
   authorizeCodeRepository,
@@ -22,6 +25,7 @@ const createTokenUseCase = new CreateTokenUseCase(
   dateHelper,
 )
 
+// Instantiate Controller
 const createTokenController = new CreateTokenController(createTokenUseCase)
 
 export {createTokenController}

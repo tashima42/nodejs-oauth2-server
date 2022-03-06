@@ -5,6 +5,7 @@ export class CreateTokenController {
   constructor(private createTokenUseCase: CreateTokenUseCase) {}
 
   async handle(request: Request, response: Response): Promise<unknown> {
+    // Get client and code information to generate the token
     const {client_id, client_secret, code} = request.body
 
     try {

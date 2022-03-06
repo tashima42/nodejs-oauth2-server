@@ -16,6 +16,7 @@ export class AuthorizeUserController {
         state: String(state),
         client_id: String(client_id)
       })
+      // If the authorization code was created, redirect it to the informed URI
       return response.redirect(`${redirect_uri}?state=${state}&code=${authorizationCode}`)
     } catch (error: any) {
       console.error(error)

@@ -3,12 +3,12 @@ import {GetUserInfoController} from "./get-user-info-controller";
 import {SqliteTokenRepository} from "../../repositories/implementations/Sqlite/SqliteTokenRepository";
 import {SqliteDatabase} from "../../repositories/implementations/Sqlite/index";
 
+// Instantiate repositories
 const sqliteDatabase = new SqliteDatabase()
-const mockTokenRepository = new SqliteTokenRepository(sqliteDatabase)
-const getUserInfoUseCase = new GetUserInfoUseCase(
-  mockTokenRepository,
-)
-
+const tokenRepository = new SqliteTokenRepository(sqliteDatabase)
+// Instantiate use case
+const getUserInfoUseCase = new GetUserInfoUseCase(tokenRepository)
+// Instantiate controller
 const getUserInfoController = new GetUserInfoController(getUserInfoUseCase)
 
 export {getUserInfoController}

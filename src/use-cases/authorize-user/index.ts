@@ -7,13 +7,16 @@ import {SqliteUserRepository} from "../../repositories/implementations/Sqlite/Sq
 import {SqliteDatabase} from "../../repositories/implementations/Sqlite/index";
 import {SqliteClientRepository} from "../../repositories/implementations/Sqlite/SqliteClientRepository";
 
+// Instantiate helpers
+const cryptoHelper = new CryptoHelper()
+const dateHelper = new DateHelper()
+// Instantiate repositories
 const sqliteDatabase = new SqliteDatabase()
 const authorizationCodeRepository = new SqliteAuthorizationCodeRepository(sqliteDatabase)
 const userRepository = new SqliteUserRepository(sqliteDatabase)
-const cryptoHelper = new CryptoHelper()
 const clientRepository = new SqliteClientRepository(sqliteDatabase)
-const dateHelper = new DateHelper()
 
+// Instantiate Use Case
 const authorizeUserUseCase = new AuthorizeUserUseCase(
   userRepository,
   clientRepository,
@@ -21,6 +24,8 @@ const authorizeUserUseCase = new AuthorizeUserUseCase(
   cryptoHelper,
   dateHelper,
 )
+
+// Instantiate Controller
 const authorizeUserController = new AuthorizeUserController(authorizeUserUseCase)
 
 export {authorizeUserController}

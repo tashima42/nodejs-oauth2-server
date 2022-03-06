@@ -6,9 +6,12 @@ export class GetUserInfoUseCase {
   constructor(private tokenRepository: ITokenRepository) {}
 
   async execute(data: GetUserInfoRequestDTO): Promise<GetUserInfoResponseDTO> {
+    // Get token
     const {token} = data
+    // Find token on the database
     const tokenFound = await this.tokenRepository.getByAccessToken(token)
     if (!tokenFound) throw {code: "UC-GI-001", message: "Token not found"}
+    // Get user information from token
     const {user: {country, subscriberId}} = tokenFound
 
     const userInfo: GetUserInfoResponseDTO = {
