@@ -5,21 +5,32 @@
   <title>OAuth Authenticate</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
+<style>
+.dummy-authorize-text {
+  padding: 10px;
+}
+</style>
 <body class='container'>
-  <h1>Authentication On Our Server</h1>
-    <div class="form-group">
-      <label>Username</label>
-      <input class='form-control auth' type="text" name="username" value="user1@example.com" id="username">
+  <h1>Tashima OAuth2.0</h1>
+    <div class="login-form">
+      <div class="form-group username">
+        <label>Username</label>
+        <input class='form-control auth' type="text" name="username" value="user1@example.com" id="username">
+      </div>
+      <div class="form-group password">
+        <label>Password</label>
+        <input class='form-control auth' type="text" name="password" value="secret" id="password"/>
+      </div>
+      <button class='btn btn-success' onclick='authorize()'>Submit</button>
     </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input class='form-control auth' type="text" name="password" value="secret" id="password"/>
+    <div class="authorize-form">
+      <h3 class="dummy-authorize-text" style="display:none;">Authorize Toolbox Dummy</h3>
+
+      <button class='btn btn-info btn-go-to-page' onclick='goToPage()' style="display:none;">Authorize</button>
     </div>
-    <button class='btn btn-success' onclick='authorize()'>Submit</button>
-    <button class='btn btn-info btn-go-to-page' onclick='goToPage()' style="display:none;">Go back to page</button>
   <script>
     function goToPage() {
-      const dummyPage = "https://dummy-dev.tbxnet.com/"
+      const dummyPage = "https://dummy-dev.tbxnet.com/" //TODO: This shouldn't be hardcoded
       window.location.replace(dummyPage)
     }
     function authorize() {
@@ -36,14 +47,26 @@
         mode: 'no-cors',
         redirect: 'follow',
       })
-      const submitButton = document.querySelector('.btn-success')
-      const goBackToPageButton = document.querySelector('.btn-go-to-page')
       setTimeout(() => {
-        submitButton.style.display = 'none';
-        goBackToPageButton.style.display = 'block';
-      }, 800)
+        hideForm()
+        showAuthorizeText()
+      }, 1000)
     }
 
+    function hideForm() {
+      const submitButton = document.querySelector('.btn-success')
+      const usernameInput = document.querySelector('.username')
+      const passwordInput = document.querySelector('.password')
+      submitButton.style.display = 'none';
+      usernameInput.style.display = 'none';
+      passwordInput.style.display = 'none';
+    } 
+    function showAuthorizeText() {
+      const authorizeText = document.querySelector('.dummy-authorize-text')
+      const authorizeButton = document.querySelector('.btn-go-to-page')
+      authorizeText.style.display = 'block';
+      authorizeButton.style.display = 'block';
+    } 
     function getUrlParams(){
       const params = {
         client_id: null,
