@@ -12,8 +12,8 @@ const router = Router()
 
 // Register routes from controllers declared on use-cases
 router.get('/', (_, res) => res.status(200).json({success: true}))
-router.get('/login', (_, res) => res.sendFile(loginFilePath))
-router.post('/authorize', (req, res) => authorizeUserController.handle(req, res))
+router.get('/authorize', (_, res) => res.sendFile(loginFilePath))
+router.post('/login', (req, res) => authorizeUserController.handle(req, res))
 router.post('/token', (req, res) => createTokenController.handle(req, res))
 router.get('/userinfo', (req, res) => getUserInfoController.handle(req, res))
 
