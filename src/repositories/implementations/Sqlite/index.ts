@@ -80,7 +80,7 @@ export class SqliteDatabase {
       ) VALUES (?, ?, ?) `,
         'client1',
         'secret',
-        'https://sp-cert.tbxnet.com/v2/auth/oauth2/assert|%s|https://sp-dev.tbxnet.com/v2/auth/oauth2/assert|%s|https://tashima42.github.io/tbx-local-dummy',
+        'https://sp-cert.tbxnet.com/v2/auth/oauth2/assert|%s|https://sp-dev.tbxnet.com/v2/auth/oauth2/assert|%s|https://tashima42.github.io/tbx-local-dummy/',
       )
     }
     async function populateUser(db: any) {

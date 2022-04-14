@@ -16,8 +16,8 @@ export class AuthorizeUserController {
         state: String(state),
         client_id: String(client_id)
       })
-      // If the authorization code was created, redirect it to the informed URI
-      return response.redirect(301, `${redirect_uri}?state=${state}&code=${authorizationCode}`)
+      const returnUrl = `${redirect_uri}?state=${state}&code=${authorizationCode}`
+      return response.status(200).json({returnUrl})
     } catch (error: any) {
       console.error(error)
       if (error.code === "UC-AU-001")

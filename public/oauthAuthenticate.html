@@ -47,7 +47,9 @@
         redirect: 'follow',
       })
         .then(response => {
-            window.location.href = response.headers.Location;
+              response.json().then(body => {
+                window.location.href = body.returnUrl;
+              })
           })
     }
 
