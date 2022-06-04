@@ -1,5 +1,5 @@
-import {IClient} from "../interfaces/IClient"
+import {Client} from "../entities/Client"
 
 export interface IClientRepository {
-  getById(id: string): Promise<IClient>,
+  getByClientId(client_id: string): Promise<Client>,
 }

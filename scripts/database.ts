@@ -3,16 +3,14 @@ import {SqliteDatabase} from "../src/repositories/implementations/Sqlite/index"
 run()
 
 async function run() {
-  const args: Array<string> = process.argv
+  let args: Array<string> = process.argv
+  args = args.slice(2)
   console.log(args)
 
   const sqliteDatabase = new SqliteDatabase()
-  const db = await sqliteDatabase.open()
-  console.log(db)
-  for (const arg of args) {
-    if (arg === '--migrate') await sqliteDatabase.migrate(db)
-    if (arg === '--populate') await sqliteDatabase.populate(db)
-  }
+  await sqliteDatabase.open()
+  if (args.includes('--drop-all')) await sqliteDatabase.dropAll()
+  if (args.includes('--migrate')) await sqliteDatabase.migrate()
+  if (args.includes('--populate')) await sqliteDatabase.populate()
 }
-
 

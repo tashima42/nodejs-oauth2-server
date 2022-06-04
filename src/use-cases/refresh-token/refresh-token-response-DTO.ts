@@ -1,4 +1,4 @@
-export interface CreateTokenResponseDTO {
+export interface RefreshTokenResponseDTO {
   access_token: string,
   token_type: string,
   expires_in: number,

@@ -1,22 +1,13 @@
-import {GetUserInfoRequestDTO} from "./get-user-info-request-DTO"
 import {GetUserInfoResponseDTO} from "./get-user-info-response-DTO"
-import {ITokenRepository} from "../../repositories/ITokenRepository"
+import {User} from "../../entities/User"
 
 export class GetUserInfoUseCase {
-  constructor(private tokenRepository: ITokenRepository) {}
+  constructor() {}
 
-  async execute(data: GetUserInfoRequestDTO): Promise<GetUserInfoResponseDTO> {
-    // Get token
-    const {token} = data
-    // Find token on the database
-    const tokenFound = await this.tokenRepository.getByAccessToken(token)
-    if (!tokenFound) throw {code: "UC-GI-001", message: "Token not found"}
-    // Get user information from token
-    const {user: {country, subscriberId}} = tokenFound
-
+  async execute(user: User): Promise<GetUserInfoResponseDTO> {
     const userInfo: GetUserInfoResponseDTO = {
-      subscriber_id: subscriberId,
-      country_code: country,
+      subscriber_id: user.getSubscriberId(),
+      country_code: user.getCountry(),
     }
     return userInfo
   }

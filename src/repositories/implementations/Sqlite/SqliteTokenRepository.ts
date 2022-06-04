@@ -1,64 +1,97 @@
 import {ITokenRepository} from "../../ITokenRepository";
-import {IToken} from "../../../interfaces/IToken";
 import {SqliteDatabase} from "./index";
-import {IUser} from "../../../interfaces/IUser";
-import {IClient} from "../../../interfaces/IClient";
+import {Token} from "../../../entities/Token";
+import {Client} from "../../../entities/Client";
+import {User} from "../../../entities/User";
 
 export class SqliteTokenRepository implements ITokenRepository {
   constructor(private sqliteDatabase: SqliteDatabase) {}
-  async create(token: IToken): Promise<IToken> {
-    const db = await this.sqliteDatabase.open()
-    const created = await db.run(`INSERT INTO token (
+  async create(token: Token): Promise<Token> {
+    const created = await this.sqliteDatabase.db.run(`INSERT INTO token (
         access_token, 
         access_token_expires_at, 
         refresh_token, 
-        refresh_token_expires_at, 
         client_id,
         user_id
-      ) VALUES (?, ?, ?, ?, ?, ?)`,
-      token.accessToken,
-      token.accessTokenExpiresAt,
-      token.refreshToken,
-      token.refreshTokenExpiresAt,
-      token.client.clientId,
-      token.user.username,
+      ) VALUES (?, ?, ?, ?, ?)`,
+      token.getAccessToken(),
+      token.getAccessTokenExpiresAt(),
+      token.getRefreshToken(),
+      token.getClientId(),
+      token.getUserId(),
     )
-    token.id = created.lastId
+    token.setId(created.lastID)
     return token
   }
-  async getByAccessToken(accessToken: string): Promise<IToken> {
-    const db = await this.sqliteDatabase.open()
-    const tokenFound = await db.get(`SELECT * FROM token
-      LEFT JOIN client ON token.client_id = client.client_id
-      LEFT JOIN user ON token.user_id = user.username
+  async getByAccessTokenWithUser(accessToken: string): Promise<{user: User, token: Token}> {
+    const tokenFound = await this.sqliteDatabase.db.get(`SELECT 
+        user.username as user_username,
+        user.password as user_password,
+        user.id as user_id,
+        user.country as user_country,
+        user.subscriber_id as user_subscriber_id,
+        token.access_token,
+        token.access_token_expires_at,
+        token.refresh_token,
+        token.client_id,
+        token.user_id,
+        token.id
+      FROM token
+      LEFT JOIN user ON token.user_id = user.id
       WHERE access_token = ?;`,
       accessToken
     )
     if (!tokenFound) throw {code: "RS-IS-SE-TN-001", message: "Token not found"}
 
-    //TODO: create generic function
-    const client: IClient = {
-      clientId: tokenFound.client_id,
-      clientSecret: tokenFound.client_secret,
-      redirectUris: tokenFound.redirect_uris.split("|%s|"),
-    }
-    const user: IUser = {
-      username: tokenFound.username,
-      password: tokenFound.password,
-      packages: tokenFound.packages.split("|%s|"),
-      country: tokenFound.country,
-      subscriberId: tokenFound.subscriber_id
-    }
-    const token: IToken = {
-      accessToken: tokenFound.access_token,
-      accessTokenExpiresAt: tokenFound.access_token_expires_at,
-      refreshToken: tokenFound.refresh_token,
-      refreshTokenExpiresAt: tokenFound.refresh_token_expires_at,
-      client,
-      user,
-      id: tokenFound.id,
-    }
+    const user = new User(
+      tokenFound.user_username,
+      tokenFound.user_password,
+      tokenFound.user_country,
+      tokenFound.user_subscriber_id,
+      tokenFound.user_id,
+    )
+    const token = new Token(
+      tokenFound.access_token,
+      tokenFound.access_token_expires_at,
+      tokenFound.refresh_token,
+      tokenFound.client_id,
+      tokenFound.user_id,
+      tokenFound.id
+    )
+
+    return {user, token}
+  }
+  async getByRefreshToken(refreshToken: string): Promise<Token> {
+    const tokenFound = await this.sqliteDatabase.db.get(`SELECT 
+        access_token,
+        access_token_expires_at,
+        refresh_token,
+        client_id,
+        user_id,
+        id
+      FROM token
+      WHERE refresh_token = ?;`,
+      refreshToken
+    )
+    if (!tokenFound) throw {code: "RS-IS-SE-TN-002", message: "Token not found"}
+
+    const token = new Token(
+      tokenFound.access_token,
+      tokenFound.access_token_expires_at,
+      tokenFound.refresh_token,
+      tokenFound.client_id,
+      tokenFound.user_id,
+      tokenFound.id
+    )
 
     return token
+  }
+  async disable(accessToken: string): Promise<void> {
+    const updated = await this.sqliteDatabase.db.run(
+      'UPDATE token SET active = ? WHERE access_token = ?',
+      0,
+      accessToken
+    )
+    if (updated.changes !== 1) throw {code: "RS-IS-SE-TN-003", message: "Failed to disable token"}
   }
 }

@@ -1,31 +1,21 @@
 import {AuthorizeUserUseCase} from "./authorize-user-use-case";
-import {AuthorizeUserController} from "./authorize-user-controller";
-import {CryptoHelper} from "../../helpers/implementations/CryptoHelper";
+import {AuthorizeUserMiddleware} from "./authorize-user-middleware";
 import {DateHelper} from "../../helpers/implementations/DateHelper";
-import {SqliteAuthorizationCodeRepository} from "../../repositories/implementations/Sqlite/SqliteAuthorizationCodeRepository";
-import {SqliteUserRepository} from "../../repositories/implementations/Sqlite/SqliteUserRepository";
-import {SqliteDatabase} from "../../repositories/implementations/Sqlite/index";
-import {SqliteClientRepository} from "../../repositories/implementations/Sqlite/SqliteClientRepository";
+import {SqliteTokenRepository} from "../../repositories/implementations/Sqlite/SqliteTokenRepository"
+import {sqliteDatabase} from "../../index"
 
 // Instantiate helpers
-const cryptoHelper = new CryptoHelper()
 const dateHelper = new DateHelper()
 // Instantiate repositories
-const sqliteDatabase = new SqliteDatabase()
-const authorizationCodeRepository = new SqliteAuthorizationCodeRepository(sqliteDatabase)
-const userRepository = new SqliteUserRepository(sqliteDatabase)
-const clientRepository = new SqliteClientRepository(sqliteDatabase)
+const tokenRepository = new SqliteTokenRepository(sqliteDatabase)
 
 // Instantiate Use Case
 const authorizeUserUseCase = new AuthorizeUserUseCase(
-  userRepository,
-  clientRepository,
-  authorizationCodeRepository,
-  cryptoHelper,
+  tokenRepository,
   dateHelper,
 )
 
 // Instantiate Controller
-const authorizeUserController = new AuthorizeUserController(authorizeUserUseCase)
+const authorizeUserMiddleware = new AuthorizeUserMiddleware(authorizeUserUseCase)
 
-export {authorizeUserController}
+export {authorizeUserMiddleware}

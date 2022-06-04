@@ -1,6 +1,7 @@
-import {IAuthorizationCode} from "../interfaces/IAuthorizationCode";
+import {AuthorizationCode} from "../entities/AuthorizationCode";
+
 export interface IAuthorizationCodeRepository {
-  create(authorizationCode: IAuthorizationCode): Promise<IAuthorizationCode>,
-  disable(authorizationCode: string): Promise<Boolean>,
-  getByCode(authorizationCode: string): Promise<IAuthorizationCode>,
+  create(authorizationCode: AuthorizationCode): Promise<AuthorizationCode>,
+  disable(authorizationCode: string): Promise<void>,
+  getByCode(authorizationCode: string): Promise<AuthorizationCode>,
 }

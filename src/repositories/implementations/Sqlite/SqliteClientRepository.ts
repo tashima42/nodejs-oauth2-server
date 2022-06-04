@@ -1,25 +1,25 @@
 import {IClientRepository} from "../../IClientRepository";
-import {IClient} from "../../../interfaces/IClient";
+import {Client} from "../../../entities/Client";
 import {SqliteDatabase} from "./index";
 
 export class SqliteClientRepository implements IClientRepository {
   constructor(private sqliteDatabase: SqliteDatabase) {}
 
-  async getById(id: string): Promise<IClient> {
-    const db = await this.sqliteDatabase.open()
-    const clientFound = await db.get(`SELECT * FROM client
+  async getByClientId(client_id: string): Promise<Client> {
+    const clientFound = await this.sqliteDatabase.db.get(`SELECT 
+            client_id, client_secret, redirect_uris, grants, id
+      FROM client
       WHERE client_id = ?;`,
-      id,
+      client_id,
     )
     if (!clientFound) throw {code: "RS-IS-SE-CT-001", message: "Client not found"}
-    const client: IClient = {
-      clientId: clientFound.client_id,
-      clientSecret: clientFound.client_secret,
-      id: clientFound.id,
-    }
-    client.redirectUris = clientFound.redirect_uris ? clientFound.redirect_uris.split("|%s|") : null
-    client.grants = clientFound.grants ? clientFound.grants.split("|%s|") : null
-    client.apiKey = clientFound.apiKey ? clientFound.apiKey : null
+    const client = new Client(
+      clientFound.client_id,
+      clientFound.client_secret,
+      clientFound.redirect_uris ? clientFound.redirect_uris.split("|%s|") : undefined,
+      clientFound.grants ? clientFound.grants.split("|%s|") : undefined,
+      clientFound.id,
+    )
     return client
   }
 }
