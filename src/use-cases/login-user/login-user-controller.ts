@@ -1,5 +1,6 @@
 import {Request, Response} from "express";
 import {LoginUserUseCase} from "./login-user-use-case";
+import {accessTokenDuration} from "../../constants"
 
 export class LoginUserController {
   constructor(private loginUserUseCase: LoginUserUseCase) {}
@@ -16,8 +17,7 @@ export class LoginUserController {
         state: String(state),
         client_id: String(client_id)
       })
-      const returnUrl = `${redirect_uri}?state=${state}&code=${authorizationCode}`
-      return response.redirect(returnUrl)
+      return response.status(200).json({success: true, redirect_uri, state, code: authorizationCode})
     } catch (error: any) {
       console.error(error)
       if (error.code === "UC-AU-001")

@@ -33,11 +33,10 @@ describe("All use cases", () => {
       .send("failureRedirect=https://tashima42.github.io/tbx-local-dummy")
       .send("cp_convert=dummy2")
 
-    expect(res.statusCode).toEqual(302)
-    const location = res.headers.location
-    const receivedState = location.split("state=")[1].split("&")[0]
-    const receivedCode = location.split("code=")[1].split("&")[0]
-    const receivedRedirectUri = location.split("?")[0]
+    expect(res.statusCode).toEqual(200)
+    const receivedState = res.body.state
+    const receivedCode = res.body.code
+    const receivedRedirectUri = res.body.redirect_uri
     expect(redirect_uri).toEqual(receivedRedirectUri)
     expect(state).toEqual(receivedState)
     code = receivedCode
