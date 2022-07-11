@@ -13,13 +13,29 @@ afterAll(async () => {
   return await sqliteDatabase.dropAll()
 })
 
-let code = null
-let access_token = null
-let refresh_token = null
+let code: string = null
+let access_token: string = null
+let refresh_token: string = null
+let client_id: string = null
+let client_secret: string = null
+
+const redirect_uri = "https://tashima42.github.io/tbx-local-dummy"
 
 describe("All use cases", () => {
+  test("Register Client", async () => {
+    const name = "Test Client"
+    const res = await request(app).post('/client')
+      .type("form")
+      .send(`name=${name}`)
+      .send(`redirect_uri=${redirect_uri}`)
+
+    expect(res.statusCode).toEqual(200)
+    client_id = res.body.client_id
+    client_secret = res.body.client_secret
+    expect(typeof res.body.client_id).toEqual("string")
+    expect(typeof res.body.client_secret).toEqual("string")
+  })
   test("Authorize user", async () => {
-    const redirect_uri = "https://tashima42.github.io/tbx-local-dummy"
     const state = "stateabc123"
     const res = await request(app).post('/auth/login')
       .type("form")
@@ -28,7 +44,7 @@ describe("All use cases", () => {
       .send("country=AR")
       .send(`redirect_uri=${redirect_uri}`)
       .send(`state=${state}`)
-      .send("client_id=client1")
+      .send(`client_id=${client_id}`)
       .send("response_type=code")
       .send("failureRedirect=https://tashima42.github.io/tbx-local-dummy")
       .send("cp_convert=dummy2")
@@ -45,8 +61,8 @@ describe("All use cases", () => {
   test("Create token", async () => {
     const res = await request(app).post('/auth/token')
       .type("form")
-      .send("client_id=client1")
-      .send("client_secret=secret")
+      .send(`client_id=${client_id}`)
+      .send(`client_secret=${client_secret}`)
       .send(`code=${code}`)
 
     expect(res.statusCode).toEqual(200)
@@ -70,8 +86,8 @@ describe("All use cases", () => {
   test("Refresh token", async () => {
     const res = await request(app).post('/auth/refresh-token')
       .type("form")
-      .send("client_id=client1")
-      .send("client_secret=secret")
+      .send(`client_id=${client_id}`)
+      .send(`client_secret=${client_secret}`)
       .send(`refresh_token=${refresh_token}`)
 
     expect(res.statusCode).toEqual(200)

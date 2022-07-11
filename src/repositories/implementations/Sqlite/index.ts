@@ -38,6 +38,7 @@ export class SqliteDatabase {
   private async createTableClient(): Promise<void> {
     await this.db.exec(`CREATE TABLE IF NOT EXISTS client(
       id 'INTEGER' PRIMARY KEY,
+      name 'TEXT' NOT NULL,
       client_id 'TEXT' NOT NULL UNIQUE,
       client_secret 'TEXT' NOT NULL,
       redirect_uris 'TEXT',
@@ -82,8 +83,9 @@ export class SqliteDatabase {
 
   private async populateClient() {
     await this.db.run(`INSERT INTO client (
-      client_id, client_secret, redirect_uris
-    ) VALUES (?, ?, ?) `,
+      name, client_id, client_secret, redirect_uris
+    ) VALUES (?, ?, ?, ?) `,
+      'client name',
       'client1',
       '$2b$10$P9PjYWou7PU.pDA3sx3DwuW1ny902LV13LVZsZGHlahuOUbsOPuBO',
       'https://sp-cert.tbxnet.com/v2/auth/oauth2/assert|%s|https://sp-dev.tbxnet.com/v2/auth/oauth2/assert|%s|https://tashima42.github.io/tbx-local-dummy',
