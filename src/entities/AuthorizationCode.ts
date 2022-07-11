@@ -7,22 +7,22 @@ export class AuthorizationCode {
   private active: boolean;
   private id?: number;
 
-  constructor( 
-    code: string, 
-    expiresAt: Date, 
-    redirectUri: string, 
-    clientId: number, 
-    userId: number, 
+  constructor(
+    code: string,
+    expiresAt: Date,
+    redirectUri: string,
+    clientId: number,
+    userId: number,
     active?: boolean | true,
     id?: number
   ) {
-      this.code = code;
-      this.expiresAt = expiresAt;
-      this.redirectUri = redirectUri;
-      this.clientId = clientId;
-      this.userId = userId;
-      this.active = active;
-      this.id = id;
+    this.code = code;
+    this.expiresAt = expiresAt;
+    this.redirectUri = redirectUri;
+    this.clientId = clientId;
+    this.userId = userId;
+    this.active = active;
+    this.id = id;
   }
 
   getCode(): string {

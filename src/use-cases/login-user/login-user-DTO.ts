@@ -1,3 +1,9 @@
+export interface ILoginUserResponseDTO {
+  redirect_uri: string,
+  code: string,
+  state: string
+}
+
 export interface ILoginUserRequestDTO {
   username: string,
   password: string,

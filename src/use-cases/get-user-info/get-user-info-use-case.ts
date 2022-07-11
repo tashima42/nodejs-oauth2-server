@@ -1,8 +1,8 @@
-import {GetUserInfoResponseDTO} from "./get-user-info-response-DTO"
-import {User} from "../../entities/User"
+import { GetUserInfoResponseDTO } from "./get-user-info-DTO"
+import { User } from "../../entities/User"
 
 export class GetUserInfoUseCase {
-  constructor() {}
+  constructor() { }
 
   async execute(user: User): Promise<GetUserInfoResponseDTO> {
     const userInfo: GetUserInfoResponseDTO = {

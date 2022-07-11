@@ -6,17 +6,17 @@ export class Client {
   private id?: number;
 
   constructor(
-    clientId: string, 
-    clientSecret: string, 
-    redirectUris?: Array<string>, 
-    grants?: Array<string>, 
+    clientId: string,
+    clientSecret: string,
+    redirectUris?: Array<string>,
+    grants?: Array<string>,
     id?: number
   ) {
-      this.clientId = clientId;
-      this.clientSecret = clientSecret;
-      this.redirectUris = redirectUris;
-      this.grants = grants;
-      this.id = id;
+    this.clientId = clientId;
+    this.clientSecret = clientSecret;
+    this.redirectUris = redirectUris;
+    this.grants = grants;
+    this.id = id;
   }
   getId(): number {
     return this.id;

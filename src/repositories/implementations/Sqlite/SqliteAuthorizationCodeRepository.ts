@@ -1,16 +1,16 @@
-import {AuthorizationCode} from "../../../entities/AuthorizationCode";
-import {IAuthorizationCodeRepository} from "../../IAuthorizationCodeRepository";
-import {SqliteDatabase} from "./index";
+import { AuthorizationCode } from "../../../entities/AuthorizationCode";
+import { IAuthorizationCodeRepository } from "../../IAuthorizationCodeRepository";
+import { SqliteDatabase } from "./index";
 
 export class SqliteAuthorizationCodeRepository implements IAuthorizationCodeRepository {
-  constructor(private sqliteDatabase: SqliteDatabase) {}
+  constructor(private sqliteDatabase: SqliteDatabase) { }
 
   async create(authorizationCode: AuthorizationCode): Promise<AuthorizationCode> {
     const created = await this.sqliteDatabase.db.run(`INSERT INTO authorization_code 
         (code, expires_at, redirect_uri, client_id, user_id) 
         VALUES (?, ?, ?, ?, ?)`,
       authorizationCode.getCode(),
-      authorizationCode.getExpiresAt(),
+      authorizationCode.getExpiresAt().toISOString(),
       authorizationCode.getRedirectUri(),
       authorizationCode.getClientId(),
       authorizationCode.getUserId()
@@ -25,11 +25,11 @@ export class SqliteAuthorizationCodeRepository implements IAuthorizationCodeRepo
       WHERE code = ?`,
       code
     )
-    if (!authorizationCodeFound) throw {code: "RS-IS-SE-AC-001", message: "Authorization code not found"}
+    if (!authorizationCodeFound) throw { code: "RS-IS-SE-AC-001", message: "Authorization code not found" }
 
     const authorizationCode = new AuthorizationCode(
       authorizationCodeFound.code,
-      authorizationCodeFound.expires_at,
+      new Date(authorizationCodeFound.expires_at),
       authorizationCodeFound.redirect_uri,
       authorizationCodeFound.client_id,
       authorizationCodeFound.user_id,
@@ -44,6 +44,6 @@ export class SqliteAuthorizationCodeRepository implements IAuthorizationCodeRepo
       0,
       code
     )
-    if (updated.changes !== 1) throw {code: "RS-IS-SE-AC-002", message: "Failed to disable authorization code"}
+    if (updated.changes !== 1) throw { code: "RS-IS-SE-AC-002", message: "Failed to disable authorization code" }
   }
 }

@@ -1,4 +1,4 @@
-import {DateHelper} from "../../../src/helpers/implementations/DateHelper"
+import { DateHelper } from "../../../src/helpers/implementations/DateHelper"
 
 describe("Date Helper", () => {
   const dateHelper = new DateHelper()

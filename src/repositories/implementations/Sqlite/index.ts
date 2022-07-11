@@ -1,5 +1,5 @@
 import sqlite3 from "sqlite3"
-import {open} from "../../../../node_modules/sqlite/build/index"
+import { open } from "../../../../node_modules/sqlite/build/index"
 import path from "path"
 
 const databaseFile = process.env.SQLITE_NAME || "database.dev.db"
@@ -44,7 +44,7 @@ export class SqliteDatabase {
       grants 'TEXT'
     )`)
   }
-  private async  createTableUser(): Promise<void> {
+  private async createTableUser(): Promise<void> {
     await this.db.exec(`CREATE TABLE IF NOT EXISTS user(
       id 'INTEGER' PRIMARY KEY,
       username 'TEXT' NOT NULL UNIQUE,
@@ -53,7 +53,7 @@ export class SqliteDatabase {
       subscriber_id 'TEXT' NOT NULL UNIQUE
     )`)
   }
-  private async  createTableToken(): Promise<void> {
+  private async createTableToken(): Promise<void> {
     await this.db.exec(`CREATE TABLE IF NOT EXISTS token(
       id 'INTEGER' PRIMARY KEY,
       access_token 'TEXT' NOT NULL UNIQUE,
@@ -66,7 +66,7 @@ export class SqliteDatabase {
       FOREIGN KEY (user_id) REFERENCES user (id)
     )`)
   }
-  private async  createTableAuthorizationCode(): Promise<void> {
+  private async createTableAuthorizationCode(): Promise<void> {
     await this.db.exec(`CREATE TABLE IF NOT EXISTS authorization_code(
       id 'INTEGER' PRIMARY KEY,
       code 'TEXT' NOT NULL UNIQUE,
@@ -80,7 +80,7 @@ export class SqliteDatabase {
     )`)
   }
 
-  private async  populateClient() {
+  private async populateClient() {
     await this.db.run(`INSERT INTO client (
       client_id, client_secret, redirect_uris
     ) VALUES (?, ?, ?) `,
@@ -89,7 +89,7 @@ export class SqliteDatabase {
       'https://sp-cert.tbxnet.com/v2/auth/oauth2/assert|%s|https://sp-dev.tbxnet.com/v2/auth/oauth2/assert|%s|https://tashima42.github.io/tbx-local-dummy',
     )
   }
-  private async  populateUser() {
+  private async populateUser() {
     await this.db.run(`INSERT INTO user (
       username, password, country, subscriber_id
     ) VALUES (?, ?, ?, ?) `,
@@ -99,7 +99,7 @@ export class SqliteDatabase {
       'subscriber1'
     )
   }
-  private async  populateToken() {
+  private async populateToken() {
     await this.db.run(`INSERT INTO token (
       access_token, 
       access_token_expires_at, 
@@ -114,7 +114,7 @@ export class SqliteDatabase {
       1
     )
   }
-  private async  populateAuthorizationCode() {
+  private async populateAuthorizationCode() {
     await this.db.run(`INSERT INTO authorization_code (
       code, expires_at, redirect_uri, client_id, user_id
     ) VALUES (?, ?, ?, ?, ?)`,
@@ -126,16 +126,16 @@ export class SqliteDatabase {
     )
   }
   private async dropTableAuthorizationCode(): Promise<void> {
-      await this.db.run(`DROP TABLE authorization_code;`)
+    await this.db.run(`DROP TABLE authorization_code;`)
   }
   private async dropTableToken(): Promise<void> {
-      await this.db.run(`DROP TABLE token;`)
+    await this.db.run(`DROP TABLE token;`)
   }
   private async dropTableClient(): Promise<void> {
-      await this.db.run(`DROP TABLE client;`)
+    await this.db.run(`DROP TABLE client;`)
   }
   private async dropTableUser(): Promise<void> {
-      await this.db.run(`DROP TABLE user;`)
+    await this.db.run(`DROP TABLE user;`)
   }
 }
 

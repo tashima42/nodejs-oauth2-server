@@ -1,11 +1,11 @@
-import {CreateTokenController} from "./create-token-controller";
-import {CreateTokenUseCase} from "./create-token-use-case";
-import {DateHelper} from "../../helpers/implementations/DateHelper";
-import {CryptoHelper} from "../../helpers/implementations/CryptoHelper";
-import {SqliteClientRepository} from "../../repositories/implementations/Sqlite/SqliteClientRepository";
-import {SqliteAuthorizationCodeRepository} from "../../repositories/implementations/Sqlite/SqliteAuthorizationCodeRepository";
-import {SqliteTokenRepository} from "../../repositories/implementations/Sqlite/SqliteTokenRepository";
-import {sqliteDatabase} from "../../index"
+import { CreateTokenController } from "./create-token-controller";
+import { CreateTokenUseCase } from "./create-token-use-case";
+import { DateHelper } from "../../helpers/implementations/DateHelper";
+import { CryptoHelper } from "../../helpers/implementations/CryptoHelper";
+import { SqliteClientRepository } from "../../repositories/implementations/Sqlite/SqliteClientRepository";
+import { SqliteAuthorizationCodeRepository } from "../../repositories/implementations/Sqlite/SqliteAuthorizationCodeRepository";
+import { SqliteTokenRepository } from "../../repositories/implementations/Sqlite/SqliteTokenRepository";
+import { sqliteDatabase } from "../../index"
 
 // Instantiate helpers
 const cryptoHelper = new CryptoHelper()
@@ -27,4 +27,4 @@ const createTokenUseCase = new CreateTokenUseCase(
 // Instantiate Controller
 const createTokenController = new CreateTokenController(createTokenUseCase)
 
-export {createTokenController}
+export { createTokenController }

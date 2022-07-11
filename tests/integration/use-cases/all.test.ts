@@ -1,8 +1,8 @@
 process.env.SQLITE_NAME = "database.test.db"
 import request from "supertest"
-import {app} from "../../../src/index"
-import {sqliteDatabase} from "../../../src/index"
-import {accessTokenDuration} from "../../../src/constants"
+import { app } from "../../../src/index"
+import { sqliteDatabase } from "../../../src/index"
+import { accessTokenDuration } from "../../../src/constants"
 
 beforeAll(async () => {
   await sqliteDatabase.open()
@@ -19,7 +19,7 @@ let refresh_token = null
 
 describe("All use cases", () => {
   test("Authorize user", async () => {
-    const redirect_uri = "https://tashima42.github.io/tbx-local-dummy" 
+    const redirect_uri = "https://tashima42.github.io/tbx-local-dummy"
     const state = "stateabc123"
     const res = await request(app).post('/auth/login')
       .type("form")
@@ -48,7 +48,7 @@ describe("All use cases", () => {
       .send("client_id=client1")
       .send("client_secret=secret")
       .send(`code=${code}`)
-      
+
     expect(res.statusCode).toEqual(200)
     expect(res.body.token_type).toEqual("Bearer")
     expect(res.body.expires_in).toEqual(accessTokenDuration)
@@ -73,7 +73,7 @@ describe("All use cases", () => {
       .send("client_id=client1")
       .send("client_secret=secret")
       .send(`refresh_token=${refresh_token}`)
-      
+
     expect(res.statusCode).toEqual(200)
     expect(res.body.token_type).toEqual("Bearer")
     expect(res.body.expires_in).toEqual(accessTokenDuration)

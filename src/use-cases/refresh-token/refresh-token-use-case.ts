@@ -1,11 +1,10 @@
-import {ITokenRepository} from "../../repositories/ITokenRepository";
-import {IClientRepository} from "../../repositories/IClientRepository";
-import {RefreshTokenRequestDTO} from "./refresh-token-request-DTO";
-import {RefreshTokenResponseDTO} from "./refresh-token-response-DTO";
-import {CryptoHelper} from "../../helpers/implementations/CryptoHelper";
-import {DateHelper} from "../../helpers/implementations/DateHelper";
-import {Token} from "../../entities/Token"
-import {accessTokenDuration} from "../../constants"
+import { ITokenRepository } from "../../repositories/ITokenRepository";
+import { IClientRepository } from "../../repositories/IClientRepository";
+import { RefreshTokenRequestDTO, RefreshTokenResponseDTO } from "./refresh-token-DTO";
+import { CryptoHelper } from "../../helpers/implementations/CryptoHelper";
+import { DateHelper } from "../../helpers/implementations/DateHelper";
+import { Token } from "../../entities/Token"
+import { accessTokenDuration } from "../../constants"
 
 export class RefreshTokenUseCase {
   constructor(
@@ -13,18 +12,18 @@ export class RefreshTokenUseCase {
     private clientRepository: IClientRepository,
     private cryptoHelper: CryptoHelper,
     private dateHelper: DateHelper,
-  ) {}
+  ) { }
 
   async execute(data: RefreshTokenRequestDTO): Promise<RefreshTokenResponseDTO> {
-    const {client_id, client_secret, refresh_token} = data
+    const { client_id, client_secret, refresh_token } = data
 
     const clientFound = await this.clientRepository.getByClientId(client_id)
-    if (!clientFound) throw {code: "UC-RT-001", message: "Client not found"}
+    if (!clientFound) throw { code: "UC-RT-001", message: "Client not found" }
     const isClientSecretCorrect = await this.cryptoHelper.compareBcrypt(client_secret, clientFound.getClientSecret())
-    if (!isClientSecretCorrect) throw {code: "UC-RT-006", message: "Incorrect Client secret"}
+    if (!isClientSecretCorrect) throw { code: "UC-RT-006", message: "Incorrect Client secret" }
 
     const tokenFound = await this.tokenRepository.getByRefreshToken(refresh_token)
-    if(!tokenFound) throw {code: "UC-RT-002", message: "Refresh token not found"}
+    if (!tokenFound) throw { code: "UC-RT-002", message: "Refresh token not found" }
 
     const token = new Token(
       this.cryptoHelper.generateRandomHash(),
@@ -35,7 +34,7 @@ export class RefreshTokenUseCase {
     )
     // Insert token in the database
     const tokenCreated = await this.tokenRepository.create(token)
-    if (!tokenCreated) throw {code: "UC-RT-004", message: "Failed to create Token"}
+    if (!tokenCreated) throw { code: "UC-RT-004", message: "Failed to create Token" }
 
     await this.tokenRepository.disable(tokenFound.getAccessToken())
 

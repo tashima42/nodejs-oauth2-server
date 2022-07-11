@@ -1,4 +1,4 @@
-import {CryptoHelper} from "../../../src/helpers/implementations/CryptoHelper"
+import { CryptoHelper } from "../../../src/helpers/implementations/CryptoHelper"
 
 describe("Crypto Helper", () => {
   const cryptoHelper = new CryptoHelper()

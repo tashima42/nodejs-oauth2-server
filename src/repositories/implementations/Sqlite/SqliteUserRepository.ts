@@ -1,9 +1,9 @@
-import {IUserRepository} from "../../IUserRepository";
-import {User} from "../../../entities/User"
-import {SqliteDatabase} from "./index";
+import { IUserRepository } from "../../IUserRepository";
+import { User } from "../../../entities/User"
+import { SqliteDatabase } from "./index";
 
 export class SqliteUserRepository implements IUserRepository {
-  constructor(private sqliteDatabase: SqliteDatabase) {}
+  constructor(private sqliteDatabase: SqliteDatabase) { }
   async findByUsernameAndCountry(username: string, country: string): Promise<User> {
     const userFound = await this.sqliteDatabase.db.get(`SELECT
           username, password, country, subscriber_id, id
@@ -12,7 +12,7 @@ export class SqliteUserRepository implements IUserRepository {
       username,
       country,
     )
-    if (!userFound) throw {code: "RS-IS-SE-UR-001", message: "User not found"}
+    if (!userFound) throw { code: "RS-IS-SE-UR-001", message: "User not found" }
     const user = new User(
       userFound.username,
       userFound.password,

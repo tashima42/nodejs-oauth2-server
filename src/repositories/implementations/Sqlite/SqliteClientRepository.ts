@@ -1,9 +1,9 @@
-import {IClientRepository} from "../../IClientRepository";
-import {Client} from "../../../entities/Client";
-import {SqliteDatabase} from "./index";
+import { IClientRepository } from "../../IClientRepository";
+import { Client } from "../../../entities/Client";
+import { SqliteDatabase } from "./index";
 
 export class SqliteClientRepository implements IClientRepository {
-  constructor(private sqliteDatabase: SqliteDatabase) {}
+  constructor(private sqliteDatabase: SqliteDatabase) { }
 
   async getByClientId(client_id: string): Promise<Client> {
     const clientFound = await this.sqliteDatabase.db.get(`SELECT 
@@ -12,7 +12,7 @@ export class SqliteClientRepository implements IClientRepository {
       WHERE client_id = ?;`,
       client_id,
     )
-    if (!clientFound) throw {code: "RS-IS-SE-CT-001", message: "Client not found"}
+    if (!clientFound) throw { code: "RS-IS-SE-CT-001", message: "Client not found" }
     const client = new Client(
       clientFound.client_id,
       clientFound.client_secret,

@@ -1,4 +1,4 @@
-import {ICryptoHelper} from "../ICryptoHelper"
+import { ICryptoHelper } from "../ICryptoHelper"
 import crypto from "crypto"
 import bcrypt from "bcrypt"
 const SALT_ROUNDS = 10

@@ -1,4 +1,4 @@
-import {SqliteDatabase} from "../src/repositories/implementations/Sqlite/index"
+import { SqliteDatabase } from "../src/repositories/implementations/Sqlite/index"
 
 run()
 

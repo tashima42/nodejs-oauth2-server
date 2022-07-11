@@ -15,7 +15,7 @@ export class Token {
     userId: number,
     active?: boolean | true,
     id?: number
-  ){
+  ) {
     this.accessToken = accessToken
     this.accessTokenExpiresAt = accessTokenExpiresAt
     this.refreshToken = refreshToken

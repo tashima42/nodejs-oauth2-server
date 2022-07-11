@@ -1,8 +1,8 @@
-import {AuthorizeUserUseCase} from "./authorize-user-use-case";
-import {AuthorizeUserMiddleware} from "./authorize-user-middleware";
-import {DateHelper} from "../../helpers/implementations/DateHelper";
-import {SqliteTokenRepository} from "../../repositories/implementations/Sqlite/SqliteTokenRepository"
-import {sqliteDatabase} from "../../index"
+import { AuthorizeUserUseCase } from "./authorize-user-use-case";
+import { AuthorizeUserMiddleware } from "./authorize-user-middleware";
+import { DateHelper } from "../../helpers/implementations/DateHelper";
+import { SqliteTokenRepository } from "../../repositories/implementations/Sqlite/SqliteTokenRepository"
+import { sqliteDatabase } from "../../index"
 
 // Instantiate helpers
 const dateHelper = new DateHelper()
@@ -18,4 +18,4 @@ const authorizeUserUseCase = new AuthorizeUserUseCase(
 // Instantiate Controller
 const authorizeUserMiddleware = new AuthorizeUserMiddleware(authorizeUserUseCase)
 
-export {authorizeUserMiddleware}
+export { authorizeUserMiddleware }

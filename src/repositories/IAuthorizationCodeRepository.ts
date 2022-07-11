@@ -1,4 +1,4 @@
-import {AuthorizationCode} from "../entities/AuthorizationCode";
+import { AuthorizationCode } from "../entities/AuthorizationCode";
 
 export interface IAuthorizationCodeRepository {
   create(authorizationCode: AuthorizationCode): Promise<AuthorizationCode>,
