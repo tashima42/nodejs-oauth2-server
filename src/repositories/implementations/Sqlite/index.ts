@@ -4,21 +4,29 @@ import path from "path"
 
 let databasePath = ':memory:?cache=shared'
 const useMemory = process.env.SQLITE_IN_MEMORY || false
+const useAnonymous = process.env.SQLITE_ANONYMOUS || false
 
-if (!useMemory) {
+if (!useMemory && !useAnonymous) {
   const databaseFile = process.env.SQLITE_NAME || "database.dev.db"
   databasePath = path.join(__dirname, `../../../../${databaseFile}`)
+}
+if (useAnonymous) {
+  databasePath = ""
 }
 
 export class SqliteDatabase {
   db: any;
 
-  async open(): Promise<any> {
+  async open(): Promise<void> {
     this.db = await open({
       filename: databasePath,
       driver: sqlite3.Database,
     })
     this.db.on('trace', (data: any) => console.log(data))
+  }
+
+  async close(): Promise<void> {
+    await this.db.close()
   }
 
   async migrate(): Promise<void> {

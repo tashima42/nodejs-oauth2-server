@@ -6,7 +6,7 @@
   "scripts": {
     "test": "SQLITE_IN_MEMORY=true jest",
     "test:watch": "SQLITE_IN_MEMORY=true jest --watch",
-    "start": "npm run db:migrate:populate && node dist/server.js",
+    "start": "node dist/server.js",
     "dev": "nodemon --exec ts-node --transpile-only src/server.ts",
     "build": "tsc --build",
     "db:migrate": "ts-node --transpile-only scripts/database.ts --migrate",
