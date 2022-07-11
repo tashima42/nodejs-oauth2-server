@@ -2,7 +2,7 @@ import sqlite3 from "sqlite3"
 import { open } from "../../../../node_modules/sqlite/build/index"
 import path from "path"
 
-let databasePath = ':memory'
+let databasePath = ':memory:?cache=shared'
 const useMemory = process.env.SQLITE_IN_MEMORY || false
 
 if (!useMemory) {
