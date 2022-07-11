@@ -41,7 +41,7 @@ export class LoginUserUseCase {
     if (!client.getRedirectUris().find(uri => uri === redirect_uri))
       throw { code: "UC-LU-004", message: "Redirect URI not registered in the client" }
     // Generate authorization code for the user
-    const authorizationCode = await this.generateAuthorizationCode(redirect_uri, userFound.getId(), client.getId())
+    const authorizationCode = await this.generateAuthorizationCode(redirect_uri, client.getId(), userFound.getId())
     return { redirect_uri, state, code: authorizationCode }
   }
 
