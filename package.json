@@ -2,7 +2,7 @@
   "name": "nodejs-oauth2-server",
   "version": "1.1.0",
   "description": "A basic oauth2 implementation, with a subset of the oauth2 spec",
-  "main": "src/index.ts",
+  "main": "dist/server.js",
   "scripts": {
     "test": "SQLITE_NAME=database.test.db jest",
     "test:watch": "SQLITE_NAME=database.test.db jest --watch",
