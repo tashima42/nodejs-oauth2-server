@@ -19,9 +19,9 @@ export class LoginUserController {
       return response.status(200).json({ success: true, ...codeResponse })
     } catch (error: any) {
       console.error(error)
-      if (error.code === "UC-AU-001")
+      if (error.code === "UC-LU-001")
         return response.status(404).json({ success: false, message: error.message })
-      if (error.code === "UC-AU-002")
+      if (error.code === "UC-LU-002")
         return response.status(401).json({ success: false, message: error.message })
       if (error.code) {
         return response.status(400).json({ success: false, message: error.message })

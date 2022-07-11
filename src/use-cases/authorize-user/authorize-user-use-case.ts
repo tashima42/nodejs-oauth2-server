@@ -1,6 +1,7 @@
 import { IDateHelper } from "../../helpers/IDateHelper";
 import { ITokenRepository } from "../../repositories/ITokenRepository"
 import { User } from "../../entities/User"
+import { Token } from "../../entities/Token";
 
 export class AuthorizeUserUseCase {
   constructor(
@@ -9,12 +10,27 @@ export class AuthorizeUserUseCase {
   ) { }
 
   async execute(accessToken: string): Promise<User> {
-    const { user, token } = await this.tokenRepository.getByAccessTokenWithUser(accessToken);
-    if (!token) throw { code: "", message: "Invalid access token" };
+    let user: User, token: Token
+    try {
+      const { user: userFound, token: tokenFound } = await this.tokenRepository.getByAccessTokenWithUser(accessToken);
+      user = userFound
+      token = tokenFound
+    } catch (error) {
+      if (error.code === "RS-IS-SE-TN-001") throw { code: "UC-AU-001", message: "Invalid access token" };
+      throw error
+    }
 
-    if (token.getActive() === false) throw { code: "", message: "Token is not active" }
+    if (token.getActive() === false) throw { code: "UC-AU-002", message: "Token is not active" }
     const isTokenExpirationDateLessThanNow = this.dateHelper.isDateLessThanNow(token.getAccessTokenExpiresAt())
-    if (isTokenExpirationDateLessThanNow) throw { code: "", message: "Token is expired" }
+
+    console.log({
+      now: new Date(),
+      nowPlusSeconds: this.dateHelper.nowPlusSeconds(8640),
+      tokenExpiresAt: token.getAccessTokenExpiresAt(),
+      isTokenExpirationDateLessThanNow,
+      active: token.getActive()
+    })
+    if (isTokenExpirationDateLessThanNow) throw { code: "UC-AU-003", message: "Token is expired" }
     return user;
   }
 }

@@ -34,6 +34,7 @@ export class SqliteTokenRepository implements ITokenRepository {
         token.refresh_token,
         token.client_id,
         token.user_id,
+        token.active,
         token.id
       FROM token
       LEFT JOIN user ON token.user_id = user.id
@@ -55,7 +56,7 @@ export class SqliteTokenRepository implements ITokenRepository {
       tokenFound.refresh_token,
       tokenFound.client_id,
       tokenFound.user_id,
-      tokenFound.id
+      tokenFound.active === 1 ? true : false
     )
 
     return { user, token }

@@ -28,18 +28,18 @@ export class LoginUserUseCase {
 
     // Get user information
     const userFound = await this.userRepository.findByUsernameAndCountry(username, country)
-    if (!userFound.getPassword()) throw { code: "UC-AU-001", message: "User not found" }
+    if (!userFound.getPassword()) throw { code: "UC-LU-001", message: "User not found" }
     // Extract hashed password from user
     const hashedPassword = userFound.getPassword()
     // Compare plain password with hashed password
     const isPasswordCorrect = await this.cryptoHelper.compareBcrypt(plainPassword, hashedPassword)
-    if (!isPasswordCorrect) throw { code: "UC-AU-002", message: "Incorrect password" }
+    if (!isPasswordCorrect) throw { code: "UC-LU-002", message: "Incorrect password" }
     // Get client information
     const client = await this.clientRepository.getByClientId(client_id)
-    if (!client) throw { code: "UC-AU-003", message: "Client not found" }
+    if (!client) throw { code: "UC-LU-003", message: "Client not found" }
     // The redirect uri should be an exact match, it shouldn't be a partial compare
     if (!client.getRedirectUris().find(uri => uri === redirect_uri))
-      throw { code: "UC-AU-004", message: "Redirect URI not registered in the client" }
+      throw { code: "UC-LU-004", message: "Redirect URI not registered in the client" }
     // Generate authorization code for the user
     const authorizationCode = await this.generateAuthorizationCode(redirect_uri, userFound.getId(), client.getId())
     return { redirect_uri, state, code: authorizationCode }
@@ -57,7 +57,7 @@ export class LoginUserUseCase {
     const createdAuthorizationCode = await this.authorizationCodeRepository.create(authorizationCode)
     // Get code string
     const code = createdAuthorizationCode.getCode()
-    if (!code) throw { code: "UC-AU-005", message: "Failed to create code" }
+    if (!code) throw { code: "UC-LU-005", message: "Failed to create code" }
     return code
   }
 }

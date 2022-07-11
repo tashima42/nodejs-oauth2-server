@@ -21,7 +21,7 @@ export class Token {
     this.refreshToken = refreshToken
     this.clientId = clientId
     this.userId = userId
-    this.active = active || true
+    this.active = active === null || active === undefined ? true : active
     this.id = id
   }
   getAccessToken(): string {
