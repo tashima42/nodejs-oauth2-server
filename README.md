@@ -1,19 +1,26 @@
-```
-  ___    _         _   _       ____    ___  
- / _ \  / \  _   _| |_| |__   |___ \  / _ \
-| | | |/ _ \| | | | __| '_ \    __) || | | |
-| |_| / ___ \ |_| | |_| | | |  / __/ | |_| |
- \___/_/   \_\__,_|\__|_| |_| |_____(_)___/
-```
-# Disclaimers: 
+# nodejs-oauth2-server
+
+## Quick overview:
+You can start by using the [Postman Collection](Postman collection: https://www.postman.com/qrestoque/workspace/pedro-tashima-s-public-workspace/collection/13233153-c52c7618-7e33-48ab-b855-f0b54e27134e?action=share&creator=13233153)
+You should make requests in the order they are, there are automatic tests that will set the collection variables for you.
+
+## Disclaimers: 
 * **NEVER** use this in production, this implementation **INSECURE**, but it's a good start point to understand how OAuth 2.0 works
 * This implementation is loosely based on [14gasher/oauth-example](https://github.com/14gasher/oauth-example). Most things are different, but the initial idea and the starting point comes from his project.
 
-# Table of Contents
+## Table of Contents
 
+1. [How to understand this repository](#how-to-understand-this-repository)
 1. [Documentation](#documentation)
 1. [Installation and Setup](#installation-and-setup)
 1. [File Structure](#file-structure)
+
+## How to understand this repository
+1. First, you should have a basic understanding of how Oauth2 works.
+1. Look at the Postman Collection on the quick overview section and do some requests, try to understand how they compare to the sequence diagram below.
+1. Go to the use-cases folder, and go folder by folder, in the same order as they are on the Postman Collection
+1. Inside each folder, you should read first the DTO file, and understand what is the request and response objects for each requests
+1. To understand how the request parameters are used and how the response ones are generated, read the use-case file, which contains all the business logic
 
 ## Documentation
 
@@ -25,25 +32,12 @@ https://toolboxdigital.atlassian.net/wiki/spaces/DDP/pages/72293671/CloudPass+In
 ## Installation and Setup
 
 1. Clone this Repo
-1. Go to project folder `cd oauth2-poc`
+1. Go to project folder `cd nodejs-oauth2-server`
 1. Install the dependencies `npm install`
 1. Prepare the database
-    1. Run the migrations `npm run db:migrate`
-    1. Populate the database `npm run db:populate`
+    1. Run the database migrations and populate `npm run db:migrate:populate`
+1. Start the tests `npm run test`
 1. Start the server
     * Run in development mode `npm run dev`
     * Run in "production" (you shouldn't run this in production) mode `npm run start`
 
-## File Structure
-* [**Entrypoint**: src/index.ts](https://github.com/Tashima42/oauth2-poc/blob/master/src/index.ts) This is where the express server is started and the middlewares are registered
-* [**Routes**: src/routes.ts](https://github.com/Tashima42/oauth2-poc/blob/master/src/routes.ts) Where the endpoints are registered, what the client will interact with
-* [**Use-Cases**: src/use-cases](https://github.com/Tashima42/oauth2-poc/tree/master/src/use-cases)
-   * [**DTO**](https://github.com/Tashima42/oauth2-poc/blob/master/src/use-cases/authorize-user/authorize-user-DTO.ts): Data Transfer Object, a interface that defines the input and output data for the use-case
-   * [**use-case**](https://github.com/Tashima42/oauth2-poc/blob/master/src/use-cases/authorize-user/authorize-user-use-case.ts): All the business logic lives here, the rules that defines how the data will flow.
-   * [**controller**](https://github.com/Tashima42/oauth2-poc/blob/master/src/use-cases/authorize-user/authorize-user-controller.ts): Treats the input and output data from the http server to the interface agnostic use-case class. This means that the use-case doesn't know where the data comes from, it doesn't care, so the controller makes all the work to treat the data before ingesting them into where the business logic lives.
-   * [**index**](https://github.com/Tashima42/oauth2-poc/blob/master/src/use-cases/authorize-user/index.ts): Instantiates all the classes in one centralized place to help with code organization
-* [**Repositories** src/repositories](https://github.com/Tashima42/oauth2-poc/tree/master/src/repositories): All the database reads and writes goes through here.
-  * [Repository Interface](https://github.com/Tashima42/oauth2-poc/blob/master/src/repositories/IAuthorizationCodeRepository.ts): Defines the methods and arguments for the database interactions.
-  * [Implementations](https://github.com/Tashima42/oauth2-poc/tree/master/src/repositories/implementations/Sqlite): The concrete implementation for the declared methods in the interfaces
-* [**Interfaces** src/interfaces](https://github.com/Tashima42/oauth2-poc/tree/master/src/interfaces): The interfaces for the main objects used in the application
-* [**Helpers** src/helpers](https://github.com/Tashima42/oauth2-poc/tree/master/src/helpers): Helpers for the use-cases.
