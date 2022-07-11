@@ -1,7 +1,7 @@
 # nodejs-oauth2-server
 
 ## Quick overview:
-You can start by using the [Postman Collection](Postman collection: https://www.postman.com/qrestoque/workspace/pedro-tashima-s-public-workspace/collection/13233153-c52c7618-7e33-48ab-b855-f0b54e27134e?action=share&creator=13233153)
+You can start by using the [Postman Collection](https://www.postman.com/qrestoque/workspace/pedro-tashima-s-public-workspace/collection/13233153-c52c7618-7e33-48ab-b855-f0b54e27134e?action=share&creator=13233153)    
 You should make requests in the order they are, there are automatic tests that will set the collection variables for you.
 
 ## Disclaimers: 
@@ -19,7 +19,7 @@ You should make requests in the order they are, there are automatic tests that w
 1. First, you should have a basic understanding of how Oauth2 works.
 1. Look at the Postman Collection on the quick overview section and do some requests, try to understand how they compare to the sequence diagram below.
 1. Go to the use-cases folder, and go folder by folder, in the same order as they are on the Postman Collection
-1. Inside each folder, you should read first the DTO file, and understand what is the request and response objects for each requests
+1. Inside each folder, you should read first the DTO file, and understand what is the request and response objects for each request
 1. To understand how the request parameters are used and how the response ones are generated, read the use-case file, which contains all the business logic
 
 ## Documentation
