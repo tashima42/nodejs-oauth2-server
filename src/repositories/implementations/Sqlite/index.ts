@@ -2,16 +2,12 @@ import sqlite3 from "sqlite3"
 import { open } from "../../../../node_modules/sqlite/build/index"
 import path from "path"
 
-let databasePath = ':memory:?cache=shared'
-const useMemory = process.env.SQLITE_IN_MEMORY || false
 const useAnonymous = process.env.SQLITE_ANONYMOUS || false
 
-if (!useMemory && !useAnonymous) {
+let databasePath = ""
+if (!useAnonymous) {
   const databaseFile = process.env.SQLITE_NAME || "database.dev.db"
   databasePath = path.join(__dirname, `../../../../${databaseFile}`)
-}
-if (useAnonymous) {
-  databasePath = ""
 }
 
 export class SqliteDatabase {
