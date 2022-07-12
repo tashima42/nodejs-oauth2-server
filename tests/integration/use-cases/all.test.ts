@@ -18,10 +18,29 @@ let access_token: string = null
 let refresh_token: string = null
 let client_id: string = null
 let client_secret: string = null
+const username = "user3@example.com"
+const password = "password"
+const country = "AR"
+const subscriber_id = "ST-92348249320420"
+
 
 const redirect_uri = "https://tashima42.github.io/tbx-local-dummy"
 
 describe("All use cases", () => {
+  test("Register User", async () => {
+    const res = await request(app).post('/user')
+      .type("form")
+      .send(`username=${username}`)
+      .send(`password=${password}`)
+      .send(`country=${country}`)
+      .send(`subscriber_id=${subscriber_id}`)
+
+    expect(res.statusCode).toEqual(200)
+    expect(res.body.username).toEqual(username)
+    expect(typeof res.body.password).toEqual("string")
+    expect(res.body.country).toEqual(country)
+    expect(res.body.subscriber_id).toEqual(subscriber_id)
+  })
   test("Register Client", async () => {
     const name = "Test Client"
     const res = await request(app).post('/client')
@@ -39,9 +58,9 @@ describe("All use cases", () => {
     const state = "stateabc123"
     const res = await request(app).post('/auth/login')
       .type("form")
-      .send("username=user1@example.com")
-      .send("password=secret")
-      .send("country=AR")
+      .send(`username=${username}`)
+      .send(`password=${password}`)
+      .send(`country=${country}`)
       .send(`redirect_uri=${redirect_uri}`)
       .send(`state=${state}`)
       .send(`client_id=${client_id}`)
@@ -79,7 +98,7 @@ describe("All use cases", () => {
     const res = await request(app).get('/userinfo')
       .set("Authorization", `Bearer ${access_token}`)
     expect(res.statusCode).toEqual(200)
-    expect(res.body.subscriber_id).toEqual("subscriber1")
+    expect(res.body.subscriber_id).toEqual(subscriber_id)
     expect(res.body.country_code).toEqual("AR")
   })
 

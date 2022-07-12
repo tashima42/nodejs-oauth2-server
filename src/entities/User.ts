@@ -21,6 +21,9 @@ export class User {
   getId(): number {
     return this.id;
   }
+  getUsername(): string {
+    return this.username;
+  }
   getPassword(): string {
     return this.password;
   }
@@ -29,5 +32,8 @@ export class User {
   }
   getCountry(): string {
     return this.country;
+  }
+  setId(id: number): void {
+    this.id = id;
   }
 }

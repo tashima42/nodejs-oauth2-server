@@ -4,8 +4,8 @@
   "description": "A basic oauth2 implementation, with a subset of the oauth2 spec",
   "main": "dist/server.js",
   "scripts": {
-    "test": "SQLITE_IN_MEMORY=true jest",
-    "test:watch": "SQLITE_IN_MEMORY=true jest --watch",
+    "test": "SQLITE_ANONYMOUS=true jest",
+    "test:watch": "SQLITE_ANONYMOUS=true jest --watch",
     "start": "node dist/server.js",
     "dev": "nodemon --exec ts-node --transpile-only src/server.ts",
     "build": "tsc --build",

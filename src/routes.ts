@@ -1,6 +1,7 @@
 import { Router } from "express";
 import path from "path"
 
+import { createUserController } from "./use-cases/create-user";
 import { loginUserController } from "./use-cases/login-user/index";
 import { createTokenController } from "./use-cases/create-token/index";
 import { getUserInfoController } from "./use-cases/get-user-info/index";
@@ -15,6 +16,7 @@ const router = Router()
 // Register routes from controllers declared on use-cases
 router.get('/', (_, res) => res.status(200).json({ success: true }))
 
+router.post('/user', (req, res) => createUserController.handle(req, res))
 router.post('/client', (req, res) => createClientController.handle(req, res))
 router.post('/auth/login', (req, res) => loginUserController.handle(req, res))
 router.get('/auth/authorize', (_, res) => res.sendFile(loginFilePath))
