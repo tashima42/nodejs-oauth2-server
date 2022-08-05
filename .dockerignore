@@ -5,4 +5,3 @@ dist
 /**/*.db
 coverage
 :memory*
-.env

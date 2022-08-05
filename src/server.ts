@@ -1,9 +1,9 @@
-import { app, sqliteDatabase } from "./index"
+import { app, postgresDatabase } from "./index"
 const port = process.env.PORT || 3000
 
 let server = null
-sqliteDatabase.open().then(() => {
-  sqliteDatabase.migrate().then(() => {
+postgresDatabase.open().then(() => {
+  postgresDatabase.migrate().then(() => {
     server = app.listen(port, () => console.info("app listening on port", port))
   })
 })
@@ -12,7 +12,7 @@ sqliteDatabase.open().then(() => {
 process.on('SIGTERM', () => {
   console.info('SIGTERM signal, close all connections');
   server.close().then(() => {
-    sqliteDatabase.close().then(() => {
+    postgresDatabase.close().then(() => {
       console.info("Closed all connections, shutting down.")
       process.exit(0)
     })

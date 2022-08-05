@@ -1,6 +1,10 @@
-import { SqliteDatabase } from "./repositories/implementations/Sqlite/index"
-const sqliteDatabase = new SqliteDatabase()
-export { sqliteDatabase }
+import "dotenv/config"
+//import { SqliteDatabase } from "./repositories/implementations/Sqlite/index"
+//const sqliteDatabase = new SqliteDatabase()
+//export { sqliteDatabase }
+import { PostgresDatabase } from "./repositories/implementations/Postgres"
+const postgresDatabase = new PostgresDatabase()
+export { postgresDatabase }
 
 import express, { Request, NextFunction, Response } from "express"
 import cors from "cors"

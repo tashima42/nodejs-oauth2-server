@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  authdb:
+    build: 
+      context: ./
+      dockerfile: ./Dockerfile.postgres.dev
+    ports:
+      - "5432:5432"
+  oauth-server:
+    build: 
+      context: ./
+      dockerfile: ./Dockerfile.node.dev
+    environment:
+      - PORT=3580
+    ports:
+      - 3580:3580
